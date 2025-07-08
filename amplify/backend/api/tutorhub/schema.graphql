@@ -1,15 +1,16 @@
-type User @model @auth(rules: [{ allow: owner }]) {
+type User @model @auth(rules: [{allow: owner}, {allow: private, operations: [create, read, update]}]) {
   id: ID!
   email: String!
-  role: String!      # "student" or "tutor"
+  role: String!
   createdAt: AWSDateTime
 }
 
-type Booking @model @auth(rules: [{ allow: owner }]) {
+type Booking @model @auth(rules: [{allow: owner}]) {
   id: ID!
   studentID: ID!
   tutorID: ID!
   time: AWSDateTime!
-  status: String!    # "requested", "confirmed", "completed"
+  status: String!
   createdAt: AWSDateTime
 }
+ 
