@@ -1,0 +1,6 @@
+type User @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  email: String!
+  role: String!      # "student" or "tutor"
+  createdAt: AWSDateTime
+}
