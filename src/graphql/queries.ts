@@ -40,3 +40,45 @@ export const listUsers = /* GraphQL */ `query ListUsers(
   }
 }
 ` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
+export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
+  getBooking(id: $id) {
+    id
+    studentID
+    tutorID
+    time
+    status
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetBookingQueryVariables,
+  APITypes.GetBookingQuery
+>;
+export const listBookings = /* GraphQL */ `query ListBookings(
+  $filter: ModelBookingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listBookings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      studentID
+      tutorID
+      time
+      status
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListBookingsQueryVariables,
+  APITypes.ListBookingsQuery
+>;

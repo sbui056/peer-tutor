@@ -62,3 +62,63 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
   APITypes.DeleteUserMutationVariables,
   APITypes.DeleteUserMutation
 >;
+export const createBooking = /* GraphQL */ `mutation CreateBooking(
+  $input: CreateBookingInput!
+  $condition: ModelBookingConditionInput
+) {
+  createBooking(input: $input, condition: $condition) {
+    id
+    studentID
+    tutorID
+    time
+    status
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateBookingMutationVariables,
+  APITypes.CreateBookingMutation
+>;
+export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
+  $input: UpdateBookingInput!
+  $condition: ModelBookingConditionInput
+) {
+  updateBooking(input: $input, condition: $condition) {
+    id
+    studentID
+    tutorID
+    time
+    status
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateBookingMutationVariables,
+  APITypes.UpdateBookingMutation
+>;
+export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
+  $input: DeleteBookingInput!
+  $condition: ModelBookingConditionInput
+) {
+  deleteBooking(input: $input, condition: $condition) {
+    id
+    studentID
+    tutorID
+    time
+    status
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteBookingMutationVariables,
+  APITypes.DeleteBookingMutation
+>;

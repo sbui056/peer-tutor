@@ -81,15 +81,25 @@ export type DeleteUserInput = {
   id: string,
 };
 
-export type ModelUserFilterInput = {
-  id?: ModelIDInput | null,
-  email?: ModelStringInput | null,
-  role?: ModelStringInput | null,
+export type CreateBookingInput = {
+  id?: string | null,
+  studentID: string,
+  tutorID: string,
+  time: string,
+  status: string,
+  createdAt?: string | null,
+};
+
+export type ModelBookingConditionInput = {
+  studentID?: ModelIDInput | null,
+  tutorID?: ModelIDInput | null,
+  time?: ModelStringInput | null,
+  status?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  and?: Array< ModelBookingConditionInput | null > | null,
+  or?: Array< ModelBookingConditionInput | null > | null,
+  not?: ModelBookingConditionInput | null,
   updatedAt?: ModelStringInput | null,
-  and?: Array< ModelUserFilterInput | null > | null,
-  or?: Array< ModelUserFilterInput | null > | null,
-  not?: ModelUserFilterInput | null,
   owner?: ModelStringInput | null,
 };
 
@@ -109,9 +119,66 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type Booking = {
+  __typename: "Booking",
+  id: string,
+  studentID: string,
+  tutorID: string,
+  time: string,
+  status: string,
+  createdAt?: string | null,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type UpdateBookingInput = {
+  id: string,
+  studentID?: string | null,
+  tutorID?: string | null,
+  time?: string | null,
+  status?: string | null,
+  createdAt?: string | null,
+};
+
+export type DeleteBookingInput = {
+  id: string,
+};
+
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  email?: ModelStringInput | null,
+  role?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
+  owner?: ModelStringInput | null,
+};
+
 export type ModelUserConnection = {
   __typename: "ModelUserConnection",
   items:  Array<User | null >,
+  nextToken?: string | null,
+};
+
+export type ModelBookingFilterInput = {
+  id?: ModelIDInput | null,
+  studentID?: ModelIDInput | null,
+  tutorID?: ModelIDInput | null,
+  time?: ModelStringInput | null,
+  status?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelBookingFilterInput | null > | null,
+  or?: Array< ModelBookingFilterInput | null > | null,
+  not?: ModelBookingFilterInput | null,
+  owner?: ModelStringInput | null,
+};
+
+export type ModelBookingConnection = {
+  __typename: "ModelBookingConnection",
+  items:  Array<Booking | null >,
   nextToken?: string | null,
 };
 
@@ -154,6 +221,19 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionBookingFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  studentID?: ModelSubscriptionIDInput | null,
+  tutorID?: ModelSubscriptionIDInput | null,
+  time?: ModelSubscriptionStringInput | null,
+  status?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionBookingFilterInput | null > | null,
+  or?: Array< ModelSubscriptionBookingFilterInput | null > | null,
+  owner?: ModelStringInput | null,
 };
 
 export type CreateUserMutationVariables = {
@@ -207,6 +287,63 @@ export type DeleteUserMutation = {
   } | null,
 };
 
+export type CreateBookingMutationVariables = {
+  input: CreateBookingInput,
+  condition?: ModelBookingConditionInput | null,
+};
+
+export type CreateBookingMutation = {
+  createBooking?:  {
+    __typename: "Booking",
+    id: string,
+    studentID: string,
+    tutorID: string,
+    time: string,
+    status: string,
+    createdAt?: string | null,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateBookingMutationVariables = {
+  input: UpdateBookingInput,
+  condition?: ModelBookingConditionInput | null,
+};
+
+export type UpdateBookingMutation = {
+  updateBooking?:  {
+    __typename: "Booking",
+    id: string,
+    studentID: string,
+    tutorID: string,
+    time: string,
+    status: string,
+    createdAt?: string | null,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteBookingMutationVariables = {
+  input: DeleteBookingInput,
+  condition?: ModelBookingConditionInput | null,
+};
+
+export type DeleteBookingMutation = {
+  deleteBooking?:  {
+    __typename: "Booking",
+    id: string,
+    studentID: string,
+    tutorID: string,
+    time: string,
+    status: string,
+    createdAt?: string | null,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -237,6 +374,48 @@ export type ListUsersQuery = {
       id: string,
       email: string,
       role: string,
+      createdAt?: string | null,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetBookingQueryVariables = {
+  id: string,
+};
+
+export type GetBookingQuery = {
+  getBooking?:  {
+    __typename: "Booking",
+    id: string,
+    studentID: string,
+    tutorID: string,
+    time: string,
+    status: string,
+    createdAt?: string | null,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListBookingsQueryVariables = {
+  filter?: ModelBookingFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListBookingsQuery = {
+  listBookings?:  {
+    __typename: "ModelBookingConnection",
+    items:  Array< {
+      __typename: "Booking",
+      id: string,
+      studentID: string,
+      tutorID: string,
+      time: string,
+      status: string,
       createdAt?: string | null,
       updatedAt: string,
       owner?: string | null,
@@ -290,6 +469,63 @@ export type OnDeleteUserSubscription = {
     id: string,
     email: string,
     role: string,
+    createdAt?: string | null,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateBookingSubscriptionVariables = {
+  filter?: ModelSubscriptionBookingFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateBookingSubscription = {
+  onCreateBooking?:  {
+    __typename: "Booking",
+    id: string,
+    studentID: string,
+    tutorID: string,
+    time: string,
+    status: string,
+    createdAt?: string | null,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateBookingSubscriptionVariables = {
+  filter?: ModelSubscriptionBookingFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateBookingSubscription = {
+  onUpdateBooking?:  {
+    __typename: "Booking",
+    id: string,
+    studentID: string,
+    tutorID: string,
+    time: string,
+    status: string,
+    createdAt?: string | null,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteBookingSubscriptionVariables = {
+  filter?: ModelSubscriptionBookingFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteBookingSubscription = {
+  onDeleteBooking?:  {
+    __typename: "Booking",
+    id: string,
+    studentID: string,
+    tutorID: string,
+    time: string,
+    status: string,
     createdAt?: string | null,
     updatedAt: string,
     owner?: string | null,

@@ -4,3 +4,12 @@ type User @model @auth(rules: [{ allow: owner }]) {
   role: String!      # "student" or "tutor"
   createdAt: AWSDateTime
 }
+
+type Booking @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  studentID: ID!
+  tutorID: ID!
+  time: AWSDateTime!
+  status: String!    # "requested", "confirmed", "completed"
+  createdAt: AWSDateTime
+}

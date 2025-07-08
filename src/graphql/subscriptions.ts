@@ -62,3 +62,63 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
   APITypes.OnDeleteUserSubscriptionVariables,
   APITypes.OnDeleteUserSubscription
 >;
+export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking(
+  $filter: ModelSubscriptionBookingFilterInput
+  $owner: String
+) {
+  onCreateBooking(filter: $filter, owner: $owner) {
+    id
+    studentID
+    tutorID
+    time
+    status
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateBookingSubscriptionVariables,
+  APITypes.OnCreateBookingSubscription
+>;
+export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking(
+  $filter: ModelSubscriptionBookingFilterInput
+  $owner: String
+) {
+  onUpdateBooking(filter: $filter, owner: $owner) {
+    id
+    studentID
+    tutorID
+    time
+    status
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateBookingSubscriptionVariables,
+  APITypes.OnUpdateBookingSubscription
+>;
+export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking(
+  $filter: ModelSubscriptionBookingFilterInput
+  $owner: String
+) {
+  onDeleteBooking(filter: $filter, owner: $owner) {
+    id
+    studentID
+    tutorID
+    time
+    status
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteBookingSubscriptionVariables,
+  APITypes.OnDeleteBookingSubscription
+>;
