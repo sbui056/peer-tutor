@@ -14,8 +14,15 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     email
     role
     createdAt
+    bookings {
+      nextToken
+      __typename
+    }
+    sessions {
+      nextToken
+      __typename
+    }
     updatedAt
-    owner
     __typename
   }
 }
@@ -32,7 +39,6 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       role
       createdAt
       updatedAt
-      owner
       __typename
     }
     nextToken
@@ -47,9 +53,10 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
     tutorID
     time
     status
+    title
+    notes
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -69,9 +76,10 @@ export const listBookings = /* GraphQL */ `query ListBookings(
       tutorID
       time
       status
+      title
+      notes
       createdAt
       updatedAt
-      owner
       __typename
     }
     nextToken
@@ -81,4 +89,72 @@ export const listBookings = /* GraphQL */ `query ListBookings(
 ` as GeneratedQuery<
   APITypes.ListBookingsQueryVariables,
   APITypes.ListBookingsQuery
+>;
+export const bookingsByStudentID = /* GraphQL */ `query BookingsByStudentID(
+  $studentID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelBookingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  bookingsByStudentID(
+    studentID: $studentID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      studentID
+      tutorID
+      time
+      status
+      title
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.BookingsByStudentIDQueryVariables,
+  APITypes.BookingsByStudentIDQuery
+>;
+export const bookingsByTutorID = /* GraphQL */ `query BookingsByTutorID(
+  $tutorID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelBookingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  bookingsByTutorID(
+    tutorID: $tutorID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      studentID
+      tutorID
+      time
+      status
+      title
+      notes
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.BookingsByTutorIDQueryVariables,
+  APITypes.BookingsByTutorIDQuery
 >;

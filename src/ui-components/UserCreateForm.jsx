@@ -40,7 +40,7 @@ export default function UserCreateForm(props) {
   const validations = {
     email: [{ type: "Required" }],
     role: [{ type: "Required" }],
-    createdAt: [],
+    createdAt: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -195,7 +195,7 @@ export default function UserCreateForm(props) {
       ></TextField>
       <TextField
         label="Created at"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="datetime-local"
         value={createdAt && convertToLocal(new Date(createdAt))}

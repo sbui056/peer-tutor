@@ -17,8 +17,15 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     email
     role
     createdAt
+    bookings {
+      nextToken
+      __typename
+    }
+    sessions {
+      nextToken
+      __typename
+    }
     updatedAt
-    owner
     __typename
   }
 }
@@ -35,8 +42,15 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     email
     role
     createdAt
+    bookings {
+      nextToken
+      __typename
+    }
+    sessions {
+      nextToken
+      __typename
+    }
     updatedAt
-    owner
     __typename
   }
 }
@@ -53,8 +67,15 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     email
     role
     createdAt
+    bookings {
+      nextToken
+      __typename
+    }
+    sessions {
+      nextToken
+      __typename
+    }
     updatedAt
-    owner
     __typename
   }
 }
@@ -72,9 +93,10 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
     tutorID
     time
     status
+    title
+    notes
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -92,9 +114,10 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
     tutorID
     time
     status
+    title
+    notes
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -112,9 +135,10 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
     tutorID
     time
     status
+    title
+    notes
     createdAt
     updatedAt
-    owner
     __typename
   }
 }

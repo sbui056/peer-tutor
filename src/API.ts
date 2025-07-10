@@ -17,7 +17,7 @@ export type ModelUserConditionInput = {
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
   updatedAt?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
+  id?: ModelStringInput | null,
 };
 
 export type ModelStringInput = {
@@ -65,9 +65,29 @@ export type User = {
   id: string,
   email: string,
   role: string,
-  createdAt?: string | null,
+  createdAt: string,
+  bookings?: ModelBookingConnection | null,
+  sessions?: ModelBookingConnection | null,
   updatedAt: string,
-  owner?: string | null,
+};
+
+export type ModelBookingConnection = {
+  __typename: "ModelBookingConnection",
+  items:  Array<Booking | null >,
+  nextToken?: string | null,
+};
+
+export type Booking = {
+  __typename: "Booking",
+  id: string,
+  studentID: string,
+  tutorID: string,
+  time: string,
+  status: string,
+  title?: string | null,
+  notes?: string | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type UpdateUserInput = {
@@ -87,6 +107,8 @@ export type CreateBookingInput = {
   tutorID: string,
   time: string,
   status: string,
+  title?: string | null,
+  notes?: string | null,
   createdAt?: string | null,
 };
 
@@ -95,12 +117,13 @@ export type ModelBookingConditionInput = {
   tutorID?: ModelIDInput | null,
   time?: ModelStringInput | null,
   status?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  notes?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   and?: Array< ModelBookingConditionInput | null > | null,
   or?: Array< ModelBookingConditionInput | null > | null,
   not?: ModelBookingConditionInput | null,
   updatedAt?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
 };
 
 export type ModelIDInput = {
@@ -119,24 +142,14 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type Booking = {
-  __typename: "Booking",
-  id: string,
-  studentID: string,
-  tutorID: string,
-  time: string,
-  status: string,
-  createdAt?: string | null,
-  updatedAt: string,
-  owner?: string | null,
-};
-
 export type UpdateBookingInput = {
   id: string,
   studentID?: string | null,
   tutorID?: string | null,
   time?: string | null,
   status?: string | null,
+  title?: string | null,
+  notes?: string | null,
   createdAt?: string | null,
 };
 
@@ -153,7 +166,6 @@ export type ModelUserFilterInput = {
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
-  owner?: ModelStringInput | null,
 };
 
 export type ModelUserConnection = {
@@ -168,44 +180,29 @@ export type ModelBookingFilterInput = {
   tutorID?: ModelIDInput | null,
   time?: ModelStringInput | null,
   status?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  notes?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelBookingFilterInput | null > | null,
   or?: Array< ModelBookingFilterInput | null > | null,
   not?: ModelBookingFilterInput | null,
-  owner?: ModelStringInput | null,
 };
 
-export type ModelBookingConnection = {
-  __typename: "ModelBookingConnection",
-  items:  Array<Booking | null >,
-  nextToken?: string | null,
-};
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelSubscriptionUserFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
   email?: ModelSubscriptionStringInput | null,
   role?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
-  owner?: ModelStringInput | null,
-};
-
-export type ModelSubscriptionIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
+  id?: ModelStringInput | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -225,15 +222,31 @@ export type ModelSubscriptionStringInput = {
 
 export type ModelSubscriptionBookingFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  studentID?: ModelSubscriptionIDInput | null,
   tutorID?: ModelSubscriptionIDInput | null,
   time?: ModelSubscriptionStringInput | null,
   status?: ModelSubscriptionStringInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  notes?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionBookingFilterInput | null > | null,
   or?: Array< ModelSubscriptionBookingFilterInput | null > | null,
-  owner?: ModelStringInput | null,
+  studentID?: ModelStringInput | null,
+};
+
+export type ModelSubscriptionIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  in?: Array< string | null > | null,
+  notIn?: Array< string | null > | null,
 };
 
 export type CreateUserMutationVariables = {
@@ -247,9 +260,16 @@ export type CreateUserMutation = {
     id: string,
     email: string,
     role: string,
-    createdAt?: string | null,
+    createdAt: string,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    sessions?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -264,9 +284,16 @@ export type UpdateUserMutation = {
     id: string,
     email: string,
     role: string,
-    createdAt?: string | null,
+    createdAt: string,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    sessions?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -281,9 +308,16 @@ export type DeleteUserMutation = {
     id: string,
     email: string,
     role: string,
-    createdAt?: string | null,
+    createdAt: string,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    sessions?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -300,9 +334,10 @@ export type CreateBookingMutation = {
     tutorID: string,
     time: string,
     status: string,
-    createdAt?: string | null,
+    title?: string | null,
+    notes?: string | null,
+    createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -319,9 +354,10 @@ export type UpdateBookingMutation = {
     tutorID: string,
     time: string,
     status: string,
-    createdAt?: string | null,
+    title?: string | null,
+    notes?: string | null,
+    createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -338,9 +374,10 @@ export type DeleteBookingMutation = {
     tutorID: string,
     time: string,
     status: string,
-    createdAt?: string | null,
+    title?: string | null,
+    notes?: string | null,
+    createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -354,9 +391,16 @@ export type GetUserQuery = {
     id: string,
     email: string,
     role: string,
-    createdAt?: string | null,
+    createdAt: string,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    sessions?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -374,9 +418,8 @@ export type ListUsersQuery = {
       id: string,
       email: string,
       role: string,
-      createdAt?: string | null,
+      createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -394,9 +437,10 @@ export type GetBookingQuery = {
     tutorID: string,
     time: string,
     status: string,
-    createdAt?: string | null,
+    title?: string | null,
+    notes?: string | null,
+    createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -416,9 +460,64 @@ export type ListBookingsQuery = {
       tutorID: string,
       time: string,
       status: string,
-      createdAt?: string | null,
+      title?: string | null,
+      notes?: string | null,
+      createdAt: string,
       updatedAt: string,
-      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type BookingsByStudentIDQueryVariables = {
+  studentID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelBookingFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type BookingsByStudentIDQuery = {
+  bookingsByStudentID?:  {
+    __typename: "ModelBookingConnection",
+    items:  Array< {
+      __typename: "Booking",
+      id: string,
+      studentID: string,
+      tutorID: string,
+      time: string,
+      status: string,
+      title?: string | null,
+      notes?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type BookingsByTutorIDQueryVariables = {
+  tutorID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelBookingFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type BookingsByTutorIDQuery = {
+  bookingsByTutorID?:  {
+    __typename: "ModelBookingConnection",
+    items:  Array< {
+      __typename: "Booking",
+      id: string,
+      studentID: string,
+      tutorID: string,
+      time: string,
+      status: string,
+      title?: string | null,
+      notes?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -426,7 +525,7 @@ export type ListBookingsQuery = {
 
 export type OnCreateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
+  id?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -435,15 +534,22 @@ export type OnCreateUserSubscription = {
     id: string,
     email: string,
     role: string,
-    createdAt?: string | null,
+    createdAt: string,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    sessions?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
+  id?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -452,15 +558,22 @@ export type OnUpdateUserSubscription = {
     id: string,
     email: string,
     role: string,
-    createdAt?: string | null,
+    createdAt: string,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    sessions?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
+  id?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
@@ -469,15 +582,22 @@ export type OnDeleteUserSubscription = {
     id: string,
     email: string,
     role: string,
-    createdAt?: string | null,
+    createdAt: string,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    sessions?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateBookingSubscriptionVariables = {
   filter?: ModelSubscriptionBookingFilterInput | null,
-  owner?: string | null,
+  studentID?: string | null,
 };
 
 export type OnCreateBookingSubscription = {
@@ -488,15 +608,16 @@ export type OnCreateBookingSubscription = {
     tutorID: string,
     time: string,
     status: string,
-    createdAt?: string | null,
+    title?: string | null,
+    notes?: string | null,
+    createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateBookingSubscriptionVariables = {
   filter?: ModelSubscriptionBookingFilterInput | null,
-  owner?: string | null,
+  studentID?: string | null,
 };
 
 export type OnUpdateBookingSubscription = {
@@ -507,15 +628,16 @@ export type OnUpdateBookingSubscription = {
     tutorID: string,
     time: string,
     status: string,
-    createdAt?: string | null,
+    title?: string | null,
+    notes?: string | null,
+    createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteBookingSubscriptionVariables = {
   filter?: ModelSubscriptionBookingFilterInput | null,
-  owner?: string | null,
+  studentID?: string | null,
 };
 
 export type OnDeleteBookingSubscription = {
@@ -526,8 +648,9 @@ export type OnDeleteBookingSubscription = {
     tutorID: string,
     time: string,
     status: string,
-    createdAt?: string | null,
+    title?: string | null,
+    notes?: string | null,
+    createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };

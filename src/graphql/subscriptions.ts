@@ -10,15 +10,22 @@ type GeneratedSubscription<InputType, OutputType> = string & {
 
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
   $filter: ModelSubscriptionUserFilterInput
-  $owner: String
+  $id: String
 ) {
-  onCreateUser(filter: $filter, owner: $owner) {
+  onCreateUser(filter: $filter, id: $id) {
     id
     email
     role
     createdAt
+    bookings {
+      nextToken
+      __typename
+    }
+    sessions {
+      nextToken
+      __typename
+    }
     updatedAt
-    owner
     __typename
   }
 }
@@ -28,15 +35,22 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
 >;
 export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
   $filter: ModelSubscriptionUserFilterInput
-  $owner: String
+  $id: String
 ) {
-  onUpdateUser(filter: $filter, owner: $owner) {
+  onUpdateUser(filter: $filter, id: $id) {
     id
     email
     role
     createdAt
+    bookings {
+      nextToken
+      __typename
+    }
+    sessions {
+      nextToken
+      __typename
+    }
     updatedAt
-    owner
     __typename
   }
 }
@@ -46,15 +60,22 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
 >;
 export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
   $filter: ModelSubscriptionUserFilterInput
-  $owner: String
+  $id: String
 ) {
-  onDeleteUser(filter: $filter, owner: $owner) {
+  onDeleteUser(filter: $filter, id: $id) {
     id
     email
     role
     createdAt
+    bookings {
+      nextToken
+      __typename
+    }
+    sessions {
+      nextToken
+      __typename
+    }
     updatedAt
-    owner
     __typename
   }
 }
@@ -64,17 +85,18 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
 >;
 export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking(
   $filter: ModelSubscriptionBookingFilterInput
-  $owner: String
+  $studentID: String
 ) {
-  onCreateBooking(filter: $filter, owner: $owner) {
+  onCreateBooking(filter: $filter, studentID: $studentID) {
     id
     studentID
     tutorID
     time
     status
+    title
+    notes
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -84,17 +106,18 @@ export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking(
 >;
 export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking(
   $filter: ModelSubscriptionBookingFilterInput
-  $owner: String
+  $studentID: String
 ) {
-  onUpdateBooking(filter: $filter, owner: $owner) {
+  onUpdateBooking(filter: $filter, studentID: $studentID) {
     id
     studentID
     tutorID
     time
     status
+    title
+    notes
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -104,17 +127,18 @@ export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking(
 >;
 export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking(
   $filter: ModelSubscriptionBookingFilterInput
-  $owner: String
+  $studentID: String
 ) {
-  onDeleteBooking(filter: $filter, owner: $owner) {
+  onDeleteBooking(filter: $filter, studentID: $studentID) {
     id
     studentID
     tutorID
     time
     status
+    title
+    notes
     createdAt
     updatedAt
-    owner
     __typename
   }
 }

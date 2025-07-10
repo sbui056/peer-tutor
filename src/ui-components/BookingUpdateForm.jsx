@@ -69,7 +69,7 @@ export default function BookingUpdateForm(props) {
     tutorID: [{ type: "Required" }],
     time: [{ type: "Required" }],
     status: [{ type: "Required" }],
-    createdAt: [],
+    createdAt: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -118,7 +118,7 @@ export default function BookingUpdateForm(props) {
           tutorID,
           time,
           status,
-          createdAt: createdAt ?? null,
+          createdAt,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -286,7 +286,7 @@ export default function BookingUpdateForm(props) {
       ></TextField>
       <TextField
         label="Created at"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="datetime-local"
         value={createdAt && convertToLocal(new Date(createdAt))}
