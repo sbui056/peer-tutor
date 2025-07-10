@@ -26,10 +26,14 @@ export default function UserUpdateForm(props) {
   } = props;
   const initialValues = {
     email: "",
+    displayName: "",
     role: "",
     createdAt: "",
   };
   const [email, setEmail] = React.useState(initialValues.email);
+  const [displayName, setDisplayName] = React.useState(
+    initialValues.displayName
+  );
   const [role, setRole] = React.useState(initialValues.role);
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [errors, setErrors] = React.useState({});
@@ -38,6 +42,7 @@ export default function UserUpdateForm(props) {
       ? { ...initialValues, ...userRecord }
       : initialValues;
     setEmail(cleanValues.email);
+    setDisplayName(cleanValues.displayName);
     setRole(cleanValues.role);
     setCreatedAt(cleanValues.createdAt);
     setErrors({});
@@ -60,6 +65,7 @@ export default function UserUpdateForm(props) {
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
     email: [{ type: "Required" }],
+    displayName: [{ type: "Required" }],
     role: [{ type: "Required" }],
     createdAt: [{ type: "Required" }],
   };
@@ -107,6 +113,7 @@ export default function UserUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           email,
+          displayName,
           role,
           createdAt,
         };
@@ -170,6 +177,7 @@ export default function UserUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               email: value,
+              displayName,
               role,
               createdAt,
             };
@@ -187,6 +195,33 @@ export default function UserUpdateForm(props) {
         {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
+        label="Display name"
+        isRequired={true}
+        isReadOnly={false}
+        value={displayName}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              email,
+              displayName: value,
+              role,
+              createdAt,
+            };
+            const result = onChange(modelFields);
+            value = result?.displayName ?? value;
+          }
+          if (errors.displayName?.hasError) {
+            runValidationTasks("displayName", value);
+          }
+          setDisplayName(value);
+        }}
+        onBlur={() => runValidationTasks("displayName", displayName)}
+        errorMessage={errors.displayName?.errorMessage}
+        hasError={errors.displayName?.hasError}
+        {...getOverrideProps(overrides, "displayName")}
+      ></TextField>
+      <TextField
         label="Role"
         isRequired={true}
         isReadOnly={false}
@@ -196,6 +231,7 @@ export default function UserUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               email,
+              displayName,
               role: value,
               createdAt,
             };
@@ -224,6 +260,7 @@ export default function UserUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               email,
+              displayName,
               role,
               createdAt: value,
             };

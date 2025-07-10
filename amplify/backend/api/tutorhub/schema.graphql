@@ -1,10 +1,11 @@
 type User @model
   @auth(rules: [
-    { allow: owner, ownerField: "id", operations: [read, update] },
+    { allow: owner, ownerField: "id", operations: [create, read, update] },
     { allow: private, operations: [read] }
   ]) {
   id: ID!
   email: String!
+  displayName: String!
   role: String!
   createdAt: AWSDateTime!
 

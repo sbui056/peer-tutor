@@ -15,6 +15,7 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
   onCreateUser(filter: $filter, id: $id) {
     id
     email
+    displayName
     role
     createdAt
     bookings {
@@ -40,6 +41,7 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
   onUpdateUser(filter: $filter, id: $id) {
     id
     email
+    displayName
     role
     createdAt
     bookings {
@@ -65,6 +67,7 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
   onDeleteUser(filter: $filter, id: $id) {
     id
     email
+    displayName
     role
     createdAt
     bookings {

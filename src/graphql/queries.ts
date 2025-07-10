@@ -12,6 +12,7 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     email
+    displayName
     role
     createdAt
     bookings {
@@ -36,6 +37,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
     items {
       id
       email
+      displayName
       role
       createdAt
       updatedAt

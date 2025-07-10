@@ -5,12 +5,14 @@
 export type CreateUserInput = {
   id?: string | null,
   email: string,
+  displayName: string,
   role: string,
   createdAt?: string | null,
 };
 
 export type ModelUserConditionInput = {
   email?: ModelStringInput | null,
+  displayName?: ModelStringInput | null,
   role?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
@@ -64,6 +66,7 @@ export type User = {
   __typename: "User",
   id: string,
   email: string,
+  displayName: string,
   role: string,
   createdAt: string,
   bookings?: ModelBookingConnection | null,
@@ -93,6 +96,7 @@ export type Booking = {
 export type UpdateUserInput = {
   id: string,
   email?: string | null,
+  displayName?: string | null,
   role?: string | null,
   createdAt?: string | null,
 };
@@ -160,6 +164,7 @@ export type DeleteBookingInput = {
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   email?: ModelStringInput | null,
+  displayName?: ModelStringInput | null,
   role?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
@@ -197,6 +202,7 @@ export enum ModelSortDirection {
 
 export type ModelSubscriptionUserFilterInput = {
   email?: ModelSubscriptionStringInput | null,
+  displayName?: ModelSubscriptionStringInput | null,
   role?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
@@ -259,6 +265,7 @@ export type CreateUserMutation = {
     __typename: "User",
     id: string,
     email: string,
+    displayName: string,
     role: string,
     createdAt: string,
     bookings?:  {
@@ -283,6 +290,7 @@ export type UpdateUserMutation = {
     __typename: "User",
     id: string,
     email: string,
+    displayName: string,
     role: string,
     createdAt: string,
     bookings?:  {
@@ -307,6 +315,7 @@ export type DeleteUserMutation = {
     __typename: "User",
     id: string,
     email: string,
+    displayName: string,
     role: string,
     createdAt: string,
     bookings?:  {
@@ -390,6 +399,7 @@ export type GetUserQuery = {
     __typename: "User",
     id: string,
     email: string,
+    displayName: string,
     role: string,
     createdAt: string,
     bookings?:  {
@@ -417,6 +427,7 @@ export type ListUsersQuery = {
       __typename: "User",
       id: string,
       email: string,
+      displayName: string,
       role: string,
       createdAt: string,
       updatedAt: string,
@@ -533,6 +544,7 @@ export type OnCreateUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
+    displayName: string,
     role: string,
     createdAt: string,
     bookings?:  {
@@ -557,6 +569,7 @@ export type OnUpdateUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
+    displayName: string,
     role: string,
     createdAt: string,
     bookings?:  {
@@ -581,6 +594,7 @@ export type OnDeleteUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
+    displayName: string,
     role: string,
     createdAt: string,
     bookings?:  {
